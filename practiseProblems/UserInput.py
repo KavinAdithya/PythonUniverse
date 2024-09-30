@@ -1,0 +1,11 @@
+name : str = input("Enter Your Name : ")
+age : int = int(input("Enter Your Age : "))
+registerNumber : int = int(input("Enter Your register Number : "))
+fatherName : str = input("Enter Your Father Name : ")
+motherName : str = input("Enter Your Mother Name : ")
+
+print('Your Name is ', name)
+print('Age is : ', age)
+print('Register Number is : ', registerNumber)
+print('father Name is : ', fatherName)
+print('Mother Name is : ', motherName)

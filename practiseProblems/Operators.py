@@ -1,0 +1,9 @@
+a = 5
+b = 2
+# Arithmetic Operators
+print(a + b)
+print(a - b)
+print(a * b)
+print(a / b)
+print(a // b)
+print(a ** b)
