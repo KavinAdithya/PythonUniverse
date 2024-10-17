@@ -1,6 +1,5 @@
+from PythonUniverse.ECommerce.Exceptions.ProductMissingException import ProductMissingException
 from PythonUniverse.ECommerce.Feature.ViewAvailabilty import Feature
-
-
 
 class Cart:
 
@@ -13,10 +12,10 @@ class Cart:
         brand = brand.lower()
 
         if Feature.isValidCategory(category):
-            raise ValueError('\t\tThe Product Category Currently Unavailable...')
+            raise ProductMissingException('\n\t\t The Product Category Currently Unavailable...')
 
-        if self.isNotAvailableProduct(category, brand, quantity):
-            raise ValueError('\t\tProduct Currently Not Available...')
+        if self.__isNotAvailableProduct(category, brand, quantity):
+            raise ProductMissingException('\n\t\t Invalid Model/Brand Given...')
 
         if category in self.cart_products:
             brands = self.cart_products[category]
@@ -30,15 +29,18 @@ class Cart:
             self.cart_products[category] = {}
             self.cart_products[category][brand] = quantity
 
-        self.quantity_change(category, brand, -quantity)
+        self.__quantity_change(category, brand, -quantity)
+        print('\n\t\t Product Has been Successfully added to the cart...')
 
-    def isNotAvailableProduct(self, category, brand, quantity) -> bool:
+    def __isNotAvailableProduct(self, category, brand, quantity) -> bool:
         product = self.products[category]
         brand = brand.lower()
 
         for prod in product:
             if prod.brand.lower() == brand and prod.quantity >= quantity:
                 return False
+            if prod.brand.lower() == brand and not prod.quantity >= quantity:
+                raise ProductMissingException('\n\t\t Product Quantity is too High compared to availability...')
 
         return True
 
@@ -47,14 +49,14 @@ class Cart:
         for category in self.cart_products:
 
             products = self.cart_products[category]
-            print('\t\tCategory : ' + category)
+            print('\n\t\t Category : ' + category.upper())
 
             for brand in products:
-                self.print_object(brand, category)
+                self.__print_object(brand, category)
                 print ('\t\t | Cart Quantity : ' , products[brand])
                 print('\t\t ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~')
 
-    def quantity_change(self, category, brand, quantity):
+    def __quantity_change(self, category, brand, quantity):
         products = self.products[category]
 
         for product in products:
@@ -66,26 +68,27 @@ class Cart:
         category = category.lower()
 
         if not category in self.cart_products:
-            raise ValueError('\t\tThe Product Category Unavailable in your cart...')
+            raise ProductMissingException('\n\t\t The Product Category Unavailable in your cart...')
 
         products = self.cart_products[category]
         brand = brand.lower()
 
         if not brand in products:
-            raise ValueError('\t\tProduct Currently Not Available...')
+            raise ProductMissingException('\n\t\t Product Currently Not Available in your cart ...')
 
         count = products[brand]
 
         if count < quantity:
-            raise ValueError('\t\tSelecting Extra products which is not present there...')
+            raise ProductMissingException('\n\t\t Selecting Extra products which is not present there...')
 
         products[brand] = count - quantity
-        self.quantity_change(category, brand, quantity)
+        self.__quantity_change(category, brand, quantity)
 
         if count == 0:
             del products[brand]
+        print('\n\t\t Product Has been Successfully Removed from the cart...')
 
-    def print_object(self, brand, category):
+    def __print_object(self, brand, category):
         objects = self.products[category]
 
         for obj in objects:

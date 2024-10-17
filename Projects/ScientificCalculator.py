@@ -3,60 +3,60 @@ import math as mt
 today=date.datetime.now()
 print('Welcome to TecH CracK !!!')
 print('The date and time is : ',today)
-def matadd(mat,mat1):
-	a=len(mat)
-	number=[]
+def matrix_addition(mat, mat1):
+	a = len(mat)
+	number = []
 	for z in range(a):
-		num=[]
-		b=len(mat[z])
+		num = []
+		b = len(mat[z])
 		for y in range(b):
-			c=mat[z][y]+mat1[z][y]
+			c = mat[z][y]+mat1[z][y]
 			num.append(c)
 		number.append(num)
 	return number
-def matsub(mat,mat1):
-	a=len(mat)
-	number=[]
+def matrix_subtraction(mat, mat1):
+	a = len(mat)
+	number = []
 	for z in range(a):
-		num=[]
-		b=len(mat[z])
+		num = []
+		b = len(mat[z])
 		for y in range(b):
-			c=mat[z][y]-mat1[z][y]
+			c = mat[z][y]-mat1[z][y]
 			num.append(c)
 		number.append(num)
 	return number
-def mattrans(mat):
-	a=len(mat)
-	number=[]
+def matrix_transpose(mat):
+	a = len(mat)
+	number = []
 	for z in range(a):
-		b=len(mat[z])
-		num=[]
+		b = len(mat[z])
+		num = []
 		for y in range(b):
 			num.append(mat[y][z])
 		number.append(num)
 	return number
-def matmul(mat,mat1):
-	a=len(mat)
-	b=len(mat[0])
-	c=len(mat1)
-	number=[]
-	if b==c:
+def matrix_multiplication(mat, mat1):
+	a = len(mat)
+	b = len(mat[0])
+	c = len(mat1)
+	number = []
+	if b == c:
 		for z in range(a):
-			sum=0
-			num=[]
+			sum = 0
+			num = []
 			for y in range(c):
 				for x in range(b):
-					sum=sum+(mat[z][x]*mat1[x][y])
+					sum = sum + (mat[z][x] * mat1[x][y])
 				num.append(sum)
 			number.append(num)
 		return number
 	else:
-		print('For multiplication of matrix must be like thiss 43 32...\nYou are not entered like this!!!')
+		print('For multiplication of matrix must be like thiss 4 * 3 3 * 2...\nYou are not entered like this!!!')
 def input1():
 	number=[]
 	while True:
 		try:
-			a=int(input('Enter the row size :'))
+			a : int =int(input('Enter the row size :'))
 			b=int(input('Enter the column size :'))
 			for z in range(a):
 				num=[]
@@ -65,95 +65,93 @@ def input1():
 					num.append(c)
 				number.append(num)
 			return number
-			break
+
 		except ValueError as e:
 			print('Not Entered correct value!!! RE ENTER',e)
-def sum(a):
+def user_sum(a):
 	sum=0
 	for i in range(1,a+1):
 		sum=sum+i
 	return sum
-def lcm(a,b):
-	i=2
+def lcm(a,b) -> int:
+	i = 2
 	while True:
-		if ((i%a==0)and(i%b==0)):
+		if i % a == 0 and i % b==0:
 			return i
-			break
-		else:
-			i+=1
+		i += 1
 print('Hey buddy!!!\nHere we can perform following operations..\nArithmetic operation -1\nMatrix operation\n1) Addition-21\n2) Subtraction-22\n3) Multiplication-23\n4) Transpose-24')
 print('GCD-3\nLCM-4\nConversion-5\nFactorial-6\nSum of n numbers-7\nSquare root-8')
 while True:
 	print()
-	inter=input('May I help you to solve Your  doubts(Yes/No) :   ')
+	inter = input('May I help you to solve Your  doubts(Yes/No) :   ')
 	print()
-	if inter.lower()=='yes':
-		el=int(input('Select the operation as per given abovee : '))
-		if el==1:
+	if inter.lower() == 'yes':
+		el = int(input('Select the operation as per given abovee : '))
+		if el == 1:
 			print('You selected arithmetic operation !!!')
 			while True:
 				try:
-					a=eval(input('Enter the Expression : '))
+					a = eval(input('Enter the Expression : '))
 					print('Required Answer is : ',a)
 					break
-				except Exception as f:
-					print('Wrong inputs..RE ENTER',f)
 				except ZeroDivisionError as e:
-					prin('One by zero is not possible !!! RE ENTER ',e)
+					print('One by zero is not possible !!! RE ENTER ',e)
 				except ValueError as g:
 					print(f'Not Entered correct value !!!{g}\nRE ENTER')
-		elif el==21:
+				except Exception as f:
+					print('Wrong inputs..RE ENTER', f)
+		elif el == 21:
 			print('You selected matrix addittion !!!')
-			a=input1()
-			b=input1()
-			c=matadd(a,b)
+			a = input1()
+			b = input1()
+			c = matrix_addition(a, b)
 			print('Executed Answer : ',c)
-		elif el==22:
+		elif el == 22:
 			print('You selected matrix Subtraction !!!')
-			a=input1()
-			b=input1()
-			c=matsub(a,b)
+			a = input1()
+			b = input1()
+			c = matrix_subtraction(a, b)
 			print('Executed Answer is : ',c)
-		elif el==23:
+		elif el == 23:
 			print('You selected matrix multiplication !!!')
 			a=input1()
 			b=input1()
-			c=matmul(a,b)
+			c=matrix_multiplication(a, b)
 			print('Executed Answer is : ',c)
 		elif el==24:
 			print('You selected matrix transpose !!!')
-			a=input1()	
-			b=mattrans(a)
+			a = input1()
+			b = matrix_transpose(a)
 			print('Executed Answer is : ',b)
-		elif el==5:
-			ell=input('Enter the Conversion type : ')	
-			if ell.lower()=='binary':
+		elif el == 5:
+			ell = input('Enter the Conversion type : ')
+			if ell.lower() == 'binary':
 				while True:
 					try:
-						a=int(input())
+						a = int(input())
 						print('Executed Answer is :',bin(a))
 						break
 					except ValueError as e:
 						print('Not Entered correct value!!! RE ENTER',e)
-			elif ell=='octal':
+			elif ell == 'octal':
 				while True:
 					try:
-						a=int(input())
+						a = int(input())
 						print('Executed Answer is :',oct(a))
 						break
 					except ValueError as e:
 						print('Not Entered correct value!!! RE ENTER',e)
-			elif ell=='hexa':
+			elif ell == 'hexa':
 				while True:
 					try:
-						a=int(input())
+						a  = int(input())
 						print('Executed Answer is :',hex(a))
 						break
 					except ValueError as e:
 						print('Not Entered correct value!!! RE ENTER',e)
 			else:
-				a=input('Enter the value for binary conversion if no enter(No)')
-				b=['b','o','x']
+				a = input('Enter the value for binary conversion if no enter(No)')
+				b =  ['b','o','x']
 				if a[1] == 'b':
 					print('Executed Answer is : ',int(a,2))
 				elif a[1] =='o':
@@ -162,17 +160,17 @@ while True:
 					print('Executes Answer is : ',int(a,16))
 				else:
 					print('You entered wrong onee !!!')
-		elif el==3:
+		elif el == 3:
 			print('You are selected GCD !!!')
 			while True:
 				try:
-					a=int(input())
-					b=int(input())
+					a = int(input())
+					b = int(input())
 					print('Executed Answer is : ',mt.gcd(a,b))
 					break
 				except ValueError as e:
 					print('Not Entered correct value!!! RE ENTER',e)
-		elif el==6:
+		elif el == 6:
 			print('You are selected factorial !!!')
 			while True:
 				try:
@@ -181,32 +179,32 @@ while True:
 					break
 				except ValueError as e:
 					print('Not Entered correct value!!! RE ENTER',e)
-		elif el==7:
+		elif el == 7:
 			print('You are selected sum of numbers !!!')
 			while True:
 				try:
-					a=int(input())
-					b=sum(a)
+					a = int(input())
+					b = user_sum(a)
 					print('Executed Answer is : ',b)
 					break
 				except ValueError as e:
 					print('Not Entered correct value!!! RE ENTER',e)
-		elif el==8:
+		elif el == 8:
 			print('You are selected square root !!!')
 			while True:
 				try:	
-					a=int(input())
+					a = int(input())
 					print('Executed Answer is : ',mt.sqrt(a))
 					break
 				except ValueError as e:
 						print('Not Entered correct value!!! RE ENTER',e)
-		elif el==4:
+		elif el == 4:
 			print('You are selected LCM !!!')
 			while True:
 				try:
-					a=int(input())
-					b=int(input())
-					c=lcm(a,b)
+					a = int(input())
+					b =  int(input())
+					c = lcm(a,b)
 					print('Executed Answer is : ',c)
 					break
 				except ValueError as e:

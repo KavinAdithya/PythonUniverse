@@ -15,7 +15,7 @@ class Mouse(Product):
     @DOI.setter
     def DOI(self, DOI):
         if not DOI:
-            raise ValueError('\t\tUndefined DOI (Dot Per Inch) ...')
+            raise ValueError('\t\t Undefined DOI (Dot Per Inch) ...')
         self.DOI = DOI
     
     @property

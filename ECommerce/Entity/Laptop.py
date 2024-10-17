@@ -46,7 +46,6 @@ class Laptop(Product):
                 + 'GB\n\t\t | Available Quantity : ' + str(self.quantity)
                 + '\n\t\t ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~')
 
-
     def __str__(self) -> str:
         return  ('\n\t\t ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~'
                  +'\n\t\t |  !^! Laptop'
