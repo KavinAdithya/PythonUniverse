@@ -2,16 +2,19 @@ from PythonUniverse.ECommerce.Entity import Mouse, Laptop, KeyBoard, Bluetooth, 
 from PythonUniverse.ECommerce.Exceptions.ProductMissingException import ProductMissingException
 from PythonUniverse.ECommerce.Exceptions.UnauthorizedAccess import UnauthorizedException
 
+from ECommerce.BootData.FetchObjectCreation import Entity_Data
+
+
 class Feature:
     dictionary = {}
 
     @classmethod
     def default_load(cls):
-        cls.dictionary['laptop'] = [Laptop.Laptop('Mega Book', 20, 45000.00, 'Techno', 32, "Intel I5", 1024)]
-        cls.dictionary['keyboard'] = [KeyBoard.KeyBoard('JackPot', 12, 1000.00, 'Dell')]
-        cls.dictionary['bluetooth'] = [Bluetooth.Bluetooth('KaVin', 30, 2800.00, 'One Plus Nord Buds', 20, 'AAC')]
-        cls.dictionary['speaker'] = [Speaker.Speaker('Smarter', 20, 10000.00, 'Samsung', 'tweeters, woofers', 'Bluetooth')]
-        cls.dictionary['mouse'] = [Mouse.Mouse('Rat', 24, 1000.00, 'Dell', 'Heavy DOI', 1000, True)]
+        cls.dictionary['laptop'] = Entity_Data.get_laptop('')
+        cls.dictionary['keyboard'] = Entity_Data.get_keyboard('')
+        cls.dictionary['bluetooth'] = Entity_Data.get_bluetooth('')
+        cls.dictionary['speaker'] = Entity_Data.get_speaker('')
+        cls.dictionary['mouse'] = Entity_Data.get_mouse('')
 
     @classmethod
     def __add_product(cls, category, item):
