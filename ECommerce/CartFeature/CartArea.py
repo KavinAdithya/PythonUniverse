@@ -2,7 +2,6 @@ from PythonUniverse.ECommerce.Exceptions.ProductMissingException import ProductM
 from PythonUniverse.ECommerce.Feature.ViewAvailabilty import Feature
 
 class Cart:
-
     def __init__(self):
         self.cart_products = {}
         self.products = Feature.dictionary

@@ -8,7 +8,7 @@ class Bluetooth(Product):
 
     @property
     def range(self) -> int:
-        return self.range
+        return self.__range
 
     @range.setter
     def range(self, scope):

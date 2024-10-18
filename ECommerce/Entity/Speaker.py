@@ -9,7 +9,7 @@ class Speaker(Product):
 
     @property
     def driver(self) -> str:
-        return self.driver
+        return self.__driver
 
     @driver.setter
     def driver(self, driver):
@@ -19,7 +19,7 @@ class Speaker(Product):
 
     @property
     def connectivity(self) -> str:
-        return self.connectivity
+        return self.__connectivity
 
     @connectivity.setter
     def connectivity(self, connectivity):

@@ -10,7 +10,7 @@ class Mouse(Product):
 
     @property
     def DOI(self) -> str:
-        return self.DOI
+        return self.__DOI
 
     @DOI.setter
     def DOI(self, DOI):
@@ -19,8 +19,8 @@ class Mouse(Product):
         self.DOI = DOI
     
     @property
-    def polling_rate(self) -> str:
-        return self.polling_rate
+    def polling_rate(self) -> int:
+        return self.__polling_rate
 
     @polling_rate.setter
     def polling_rate(self, polling_rate):
@@ -29,8 +29,8 @@ class Mouse(Product):
         self.polling_rate = polling_rate
 
     @property
-    def isErgonomics(self) -> str:
-        return self.isErgonomics
+    def isErgonomics(self) -> bool:
+        return self.__isErgonomics
 
     @isErgonomics.setter
     def isErgonomics(self, isErgonomics):
