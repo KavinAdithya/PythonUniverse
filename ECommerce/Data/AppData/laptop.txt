@@ -1,1 +1,2 @@
-Mega Book 16 45000.0 Techno 32 Intel I5 1024
+Mega-Book 7 45000.0 Techno 16 Intel-i5 32
+Assus 0 20000.0 Assus-Book 1024 Intel-i7 2048

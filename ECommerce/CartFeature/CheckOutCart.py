@@ -1,3 +1,5 @@
+from PythonUniverse.ECommerce.Data.ApplicationData.SettingCartData import SettingCartData
+
 class Checkout:
     def __init__(self, product, cart):
         self.product = product
@@ -16,15 +18,16 @@ class Checkout:
 
         print('\n\n\t\t Total Cost for Your Products in the cart is : ' , total_cost)
 
-    def __find_price(self, category, brand) -> int:
+    def __find_price(self, category, model) -> int:
         products = self.product[category]
 
         for prod in products:
-            if prod.brand.lower() == brand:
+            if prod.name.lower() == model:
                 return prod.price
 
         return 0
 
     def check_out(self):
-        print('\n\n\t\t\t\t You Have Made a Successfully purchased ? \n\t\t\t\t\t\t!^! Thank You !^!')
-        del self.cart
+        self.cart.clear()
+        SettingCartData.remove()
+        print('\n\n\t\t\t\t You Have Made a Successfully purchased ?')

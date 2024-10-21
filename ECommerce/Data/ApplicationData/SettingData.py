@@ -2,7 +2,7 @@ from PythonUniverse.ECommerce.Feature.ViewAvailabilty import Feature
 
 
 class SettingData:
-    dictionary = Feature.dictionary
+    dictionary : dict = Feature.dictionary
     path = 'A:/Python/PycharmProjects/PythonUniverse/ECommerce/Data/AppData/'
 
     @classmethod
@@ -31,7 +31,7 @@ class SettingData:
                         lap.brand + ' ' +
                         str(lap.main_memory) + ' ' +
                         lap.processor + ' ' +
-                        str(lap.secondary_storage))
+                        str(lap.secondary_storage)) + '\n'
             file.write(item_data)
 
     @classmethod
@@ -42,7 +42,7 @@ class SettingData:
                         str(blue.price) + ' ' +
                         blue.brand + ' ' +
                         str(blue.range) + ' ' +
-                        blue.codec_support)
+                        blue.codec_support) + '\n'
             file.write(item_data)
 
     @classmethod
@@ -51,7 +51,7 @@ class SettingData:
             item_data = (key.name + ' '+
                         str(key.quantity) + ' ' +
                         str(key.price) + ' ' +
-                        key.brand)
+                        key.brand) + '\n'
             file.write(item_data)
 
     @classmethod
@@ -63,7 +63,7 @@ class SettingData:
                         mou.brand + ' ' +
                         mou.DOI + ' ' +
                         str(mou.polling_rate) + ' ' +
-                        str(mou.isErgonomics))
+                        str(mou.isErgonomics)) + '\n'
             file.write(item_data)
 
     @classmethod
@@ -74,24 +74,12 @@ class SettingData:
                         str(speak.price) + ' ' +
                         speak.brand + ' ' +
                         speak.driver + ' ' +
-                        speak.connectivity)
+                        speak.connectivity) + '\n'
             file.write(item_data)
     @classmethod
-    def store_data(cls, cart = None):
-
-        if cart is not None:
-            cart.view_cart()
-            cls.dictionary = cart.cart_products
-            cls.path = 'A:/Python/PycharmProjects/PythonUniverse/ECommerce/Data/CartData/'
-
-
-        if 'laptop' in cls.dictionary:
+    def store_data(cls):
             cls.store('laptop')
-        if 'bluetooth' in cls.dictionary:
             cls.store('bluetooth')
-        if 'keyboard' in cls.dictionary:
             cls.store('keyboard')
-        if 'speaker' in cls.dictionary:
             cls.store('speaker')
-        if 'mouse' in cls.dictionary:
             cls.store('mouse')

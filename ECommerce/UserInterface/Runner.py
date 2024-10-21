@@ -1,5 +1,5 @@
-from PythonUniverse.ECommerce.CartFeature.CartArea import Cart
 from PythonUniverse.ECommerce.CartFeature.CheckOutCart import Checkout
+from PythonUniverse.ECommerce.Data.ApplicationData.SettingCartData import SettingCartData
 from PythonUniverse.ECommerce.Data.ApplicationData.SettingData import SettingData
 from PythonUniverse.ECommerce.Entity.ObjectCreator import ObjectCreator
 from PythonUniverse.ECommerce.Exceptions.UnauthorizedAccess import UnauthorizedException
@@ -9,7 +9,7 @@ import sys
 ''' Its a User Interface to provide abstraction on operations'''
 
 class Runner:
-    cart = Cart()
+    cart = SettingCartData.load_cart()
 
     @classmethod
     def __title(cls):
@@ -71,7 +71,7 @@ class Runner:
 
         try:
             product.append(input('\n\t\t Enter Category : '))
-            product.append(input('\t\t Enter Product model / brand : '))
+            product.append(input('\t\t Enter Product model : '))
             product.append(int(input('\t\t Enter Quantity Which you needed : ')))
         except ValueError as e:
             print('\t\t Invalid Product Data Format...')
@@ -83,8 +83,7 @@ class Runner:
     def __end(cls):
         print('\n\t\t\t\t\t\t!^! Thank You !^!')
         SettingData.store_data()
-        print(cls.cart.cart_products)
-        SettingData.store_data(cls.cart)
+        SettingCartData.persist_cart(cls.cart)
         sys.exit()
 
     @classmethod
@@ -104,6 +103,10 @@ class Runner:
 
         if not password == 'KavinDharani@3':
             raise UnauthorizedException('\t\t Invalid Codee.. Try Again...')
+
+        if 'yes' == input('\n\t\t Are You Want increases the quantity of the products : ').lower():
+            Feature.increases_product()
+            return
 
         print('\n\t\t --- Select the Category ---')
         print('\n\t\t 1 -> \tLaptop        <- 1')

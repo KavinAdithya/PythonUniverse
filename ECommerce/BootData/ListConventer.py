@@ -1,8 +1,8 @@
-from ECommerce.Entity.Bluetooth import Bluetooth
-from ECommerce.Entity.KeyBoard import KeyBoard
-from ECommerce.Entity.Laptop import Laptop
-from ECommerce.Entity.Mouse import Mouse
-from ECommerce.Entity.Speaker import Speaker
+from PythonUniverse.ECommerce.Entity.Speaker import Speaker
+from PythonUniverse.ECommerce.Entity.Mouse import Mouse
+from PythonUniverse.ECommerce.Entity.Bluetooth import Bluetooth
+from PythonUniverse.ECommerce.Entity.KeyBoard import KeyBoard
+from PythonUniverse.ECommerce.Entity.Laptop import Laptop
 
 
 class List_Converter:
@@ -11,7 +11,7 @@ class List_Converter:
         list_of_laptops = []
         for item in items:
             attributes = item.strip().split(' ')
-            laptop = Laptop(attributes[0], attributes[1], attributes[2], attributes[3], attributes[4], attributes[5], attributes[6])
+            laptop = Laptop(attributes[0], int(attributes[1]), float(attributes[2]), attributes[3], attributes[4], attributes[5], attributes[6])
             list_of_laptops.append(laptop)
         return list_of_laptops
 
@@ -20,7 +20,7 @@ class List_Converter:
         list_of_bluetooth = []
         for item in items:
             attributes = item.strip().split(' ')
-            bluetooth = Bluetooth(attributes[0], attributes[1], attributes[2], attributes[3], attributes[4], attributes[5])
+            bluetooth = Bluetooth(attributes[0], int(attributes[1]), float(attributes[2]), attributes[3], attributes[4], attributes[5])
             list_of_bluetooth.append(bluetooth)
         return list_of_bluetooth
 
@@ -29,7 +29,7 @@ class List_Converter:
         list_of_keyboard = []
         for item in items:
             attributes = item.strip().split(' ')
-            keyboard = KeyBoard(attributes[0], attributes[1], attributes[2], attributes[3])
+            keyboard = KeyBoard(attributes[0], int(attributes[1]), float(attributes[2]), attributes[3])
             list_of_keyboard.append(keyboard)
         return list_of_keyboard
 
@@ -38,7 +38,7 @@ class List_Converter:
         list_of_mouse = []
         for item in items:
             attributes = item.strip().split(' ')
-            mouse = Mouse(attributes[0], attributes[1], attributes[2], attributes[3], attributes[4], attributes[5], attributes[6])
+            mouse = Mouse(attributes[0], int(attributes[1]), float(attributes[2]), attributes[3], attributes[4], attributes[5], attributes[6])
             list_of_mouse.append(mouse)
         return list_of_mouse
 
@@ -47,6 +47,6 @@ class List_Converter:
         list_of_speaker = []
         for item in items:
             attributes = item.strip().split(' ')
-            speaker = Speaker(attributes[0], attributes[1], attributes[2], attributes[3], attributes[4], attributes[5], attributes[6])
+            speaker = Speaker(attributes[0], int(attributes[1]), float(attributes[2]), attributes[3], attributes[4], attributes[5])
             list_of_speaker.append(speaker)
         return list_of_speaker

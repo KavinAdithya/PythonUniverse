@@ -40,6 +40,7 @@ class Mouse(Product):
         return ( '\n\t\t ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~'
                  + '\n\t\t |  !^! Mouse'
                  + self.product_details()
+                 +'\n\t\t | Brand : ' + self.brand
                  + '\n\t\t | Dot Per Inch (DOI) : ' + self.__DOI
                  + '\n\t\t | Polling Rate : ' + str(self.__polling_rate)
                  + '\n\t\t | Is Ergonomice : ' + str(self.__isErgonomics)
