@@ -46,7 +46,7 @@ class Cart:
     def view_cart(self):
 
         if len(self.cart_products) == 0:
-            print('\n\t\t No products Available in your Cart..');
+            print('\n\t\t No products Available in your Cart..')
             return
 
         for category in self.cart_products:
@@ -93,9 +93,6 @@ class Cart:
 
     def __print_object(self, model, category):
         objects = self.products[category]
-
         for obj in objects:
-            if obj.name.lower() == model:
+            if obj.name.lower() == model.lower():
                 print(obj)
-
-Feature.default_load()

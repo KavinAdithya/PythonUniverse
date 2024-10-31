@@ -1,1 +1,1 @@
-Razer-Basilisk-V3 33 1000.0 Dell kkk 12 True
+Razer-Basilisk-V3 100 10000.0 Zebronics High Sensitivity 100

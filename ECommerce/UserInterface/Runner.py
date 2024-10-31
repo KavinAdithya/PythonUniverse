@@ -1,6 +1,8 @@
+from PythonUniverse.ECommerce.CartFeature.CartArea import Cart
 from PythonUniverse.ECommerce.CartFeature.CheckOutCart import Checkout
 from PythonUniverse.ECommerce.Data.ApplicationData.SettingCartData import SettingCartData
 from PythonUniverse.ECommerce.Data.ApplicationData.SettingData import SettingData
+from PythonUniverse.ECommerce.DataPersistent.DataBaseInterface import DataBaseInterface
 from PythonUniverse.ECommerce.Entity.ObjectCreator import ObjectCreator
 from PythonUniverse.ECommerce.Exceptions.UnauthorizedAccess import UnauthorizedException
 from PythonUniverse.ECommerce.Feature.ViewAvailabilty import Feature
@@ -9,7 +11,25 @@ import sys
 ''' Its a User Interface to provide abstraction on operations'''
 
 class Runner:
-    cart = SettingCartData.load_cart()
+
+    __cart : Cart = None
+    __admin : list = []
+    __isFiles : bool = False
+
+    @classmethod
+    def load_admin(cls, isFiles : bool):
+        if isFiles:
+            cls.__admin = SettingCartData.admin_data()
+            return
+
+        cls.__admin = DataBaseInterface.get_admin()
+
+    @classmethod
+    def load_cart(cls, isFiles: bool):
+        if isFiles:
+            cls.__cart = SettingCartData.load_cart()
+            return
+        cls.__cart = Cart(DataBaseInterface.get_cart())
 
     @classmethod
     def __title(cls):
@@ -44,20 +64,20 @@ class Runner:
             Feature.view_availability()
         elif n == 2:
             data = cls.__get_product_data()
-            cls.cart.addProducts(data[0], data[1], data[2])
+            cls.__cart.addProducts(data[0], data[1], data[2])
         elif n == 3:
-            cls.cart.view_cart()
+            cls.__cart.view_cart()
         elif n == 4:
             data = cls.__get_product_data()
-            cls.cart.remove_product(data[0], data[1], data[2])
+            cls.__cart.remove_product(data[0], data[1], data[2])
         elif n == 5:
-            cls.cart.view_cart()
-            checkout = Checkout(cls.cart.products, cls.cart.cart_products)
+            cls.__cart.view_cart()
+            checkout = Checkout(cls.__cart.products, cls.__cart.cart_products)
             checkout.estimate_cost()
             if 'yes' == input('\t\t Are You want to checkout (Yes / No) ??  :   ').lower():
                 checkout.check_out()
             cls.__end()
-        elif n == 9360016740:
+        elif n == int(cls.__admin[0]):
             print('\n\t\t !^! Admin Usage !^!')
             print('\t\t Welcome KaVin <%3>?/')
             cls.__control_admin()
@@ -82,18 +102,26 @@ class Runner:
     @classmethod
     def __end(cls):
         print('\n\t\t\t\t\t\t!^! Thank You !^!')
-        SettingData.store_data()
-        SettingCartData.persist_cart(cls.cart)
+        if cls.__isFiles:
+            SettingData.store_data()
+            SettingCartData.persist_cart(cls.__cart)
         sys.exit()
 
     @classmethod
-    def start_application(cls, isTitle):
+    def start_application(cls, isTitle : bool, isFiles : bool):
+
         if isTitle:
+            Feature.load_products(isFiles)
+            cls.load_cart(isFiles)
+            cls.load_admin(isFiles)
             cls.__title()
+            cls.__isFiles = isFiles
+
         cls.__choices()
         cls.__manage_operation()
+
         if 'yes' == input('\n\t\t Are You Want to continue it (Yes / No) : ').lower():
-            cls.start_application(False)
+            cls.start_application(False, isFiles)
         else:
             cls.__end()
 
@@ -101,7 +129,7 @@ class Runner:
     def __control_admin(cls):
         password = input('\n\t\t Secret Authentication : ')
 
-        if not password == 'KavinDharani@3':
+        if not password == cls.__admin[1]:
             raise UnauthorizedException('\t\t Invalid Codee.. Try Again...')
 
         if 'yes' == input('\n\t\t Are You Want increases the quantity of the products : ').lower():

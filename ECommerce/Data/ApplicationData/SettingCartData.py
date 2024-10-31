@@ -2,7 +2,7 @@ from PythonUniverse.ECommerce.CartFeature.CartArea import Cart
 import os
 
 class SettingCartData:
-    __cart : dict
+    __cart : dict = {}
 
     @classmethod
     def persist_cart(cls, cart : Cart):
@@ -18,8 +18,6 @@ class SettingCartData:
 
             for item in items:
                 file.write(item + " " + str(items[item]) + "\n")
-
-
             file.close()
 
     @classmethod
@@ -31,19 +29,23 @@ class SettingCartData:
                             'mouse.txt' : 'mouse'
                             ,'keyboard.txt' : 'keyboard'}
         cart_products : dict = {}
+
         for cat in category:
             path : str = "A:/Python/PycharmProjects/PythonUniverse/ECommerce/Data/CartData/" + cat
 
             if not os.path.exists(path):
                 continue
+
             file = open(path, "r")
             items = file.readlines()
             cart_products[category[cat]] = {}
+
             for item in items:
                 detail : list = item.split(" ")
                 cart_products[category[cat]][detail[0]] = int(detail[1])
 
         return Cart(cart_products)
+
     @classmethod
     def remove(cls):
         category: list = ['laptop','speaker','bluetooth','mouse','keyboard']
@@ -53,5 +55,12 @@ class SettingCartData:
             if  os.path.exists(path):
                 os.remove(path)
 
+    @classmethod
+    def admin_data(cls) -> list:
 
-SettingCartData.load_cart()
+        path : str = 'A:/Python/PycharmProjects/PythonUniverse/ECommerce/Data/CartData/admin.txt'
+        file = open(path, 'r')
+
+        return file.readline().split(' ')
+
+# SettingCartData.load_cart()

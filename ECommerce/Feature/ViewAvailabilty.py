@@ -1,17 +1,31 @@
+from PythonUniverse.ECommerce.BootData.FetchObjectCreation import Entity_Data
+from PythonUniverse.ECommerce.DataPersistent.DataBaseInterface import DataBaseInterface
 from PythonUniverse.ECommerce.Exceptions.ProductMissingException import ProductMissingException
 from PythonUniverse.ECommerce.Exceptions.UnauthorizedAccess import UnauthorizedException
-from PythonUniverse.ECommerce.BootData.FetchObjectCreation import Entity_Data
 
 class Feature:
-    dictionary = {}
+    isFiles : bool = False
+    dictionary : dict = {}
+    @classmethod
+    def load_products(cls, isFiles):
+        cls.isFiles = isFiles
+        if isFiles:
+            cls.__default_load()
+            return
+        cls.dictionary =  DataBaseInterface.get_products()
 
     @classmethod
-    def default_load(cls):
-        cls.dictionary['laptop'] = Entity_Data.get_laptop('A:/Python/PycharmProjects/PythonUniverse/ECommerce/Data/AppData/')
-        cls.dictionary['keyboard'] = Entity_Data.get_keyboard('A:/Python/PycharmProjects/PythonUniverse/ECommerce/Data/AppData/')
-        cls.dictionary['bluetooth'] = Entity_Data.get_bluetooth('A:/Python/PycharmProjects/PythonUniverse/ECommerce/Data/AppData/')
-        cls.dictionary['speaker'] = Entity_Data.get_speaker('A:/Python/PycharmProjects/PythonUniverse/ECommerce/Data/AppData/')
-        cls.dictionary['mouse'] = Entity_Data.get_mouse('A:/Python/PycharmProjects/PythonUniverse/ECommerce/Data/AppData/')
+    def __default_load(cls):
+        cls.dictionary['laptop'] = Entity_Data.get_laptop(
+            'A:/Python/PycharmProjects/PythonUniverse/ECommerce/Data/AppData/')
+        cls.dictionary['keyboard'] = Entity_Data.get_keyboard(
+            'A:/Python/PycharmProjects/PythonUniverse/ECommerce/Data/AppData/')
+        cls.dictionary['bluetooth'] = Entity_Data.get_bluetooth(
+            'A:/Python/PycharmProjects/PythonUniverse/ECommerce/Data/AppData/')
+        cls.dictionary['speaker'] = Entity_Data.get_speaker(
+            'A:/Python/PycharmProjects/PythonUniverse/ECommerce/Data/AppData/')
+        cls.dictionary['mouse'] = Entity_Data.get_mouse(
+            'A:/Python/PycharmProjects/PythonUniverse/ECommerce/Data/AppData/')
 
     @classmethod
     def __add_product(cls, category, item):

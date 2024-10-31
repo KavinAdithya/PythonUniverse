@@ -1,7 +1,5 @@
 from datetime import datetime
-
 import pymysql
-from pymysql import DATETIME
 
 try:
     print("Connecting to the database...")
@@ -28,10 +26,12 @@ try:
                             'model CHAR(20),'
                             'price DECIMAL(10, 2),'
                             'launch_data DATE)')
-    insert_query : str = 'INSERT INTO Bluetooth VALUES(%s %s %s %s %s)'
+    insert_query : str = 'INSERT INTO Bluetooth(device_name, model, price, launch_data) VALUES(%s %s %s %s)'
     # cursor.execute('DESCRIBE bluetooth')
     # cursor.execute('ALTER TABLE Bluetooth modify launch_data TIMESTAMP')
-    cursor.execute(insert_query, (1, 'One ', 'One Plus', 20000.00, str(datetime.now())))
+    data : str = "" + str(datetime.now())
+    print(data)
+    cursor.execute(insert_query, ('One ', 'One Plus', 20000.00, '2024-10-24 16:49:41.754890'))
     # for row in cursor.fetchall():
     #     print(row)
 
