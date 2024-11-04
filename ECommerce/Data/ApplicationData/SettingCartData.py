@@ -44,7 +44,7 @@ class SettingCartData:
                 detail : list = item.split(" ")
                 cart_products[category[cat]][detail[0]] = int(detail[1])
 
-        return Cart(cart_products)
+        return Cart(cart_products, True)
 
     @classmethod
     def remove(cls):

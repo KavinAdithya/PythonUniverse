@@ -1,4 +1,5 @@
 from PythonUniverse.ECommerce.BootData.FetchObjectCreation import Entity_Data
+from PythonUniverse.ECommerce.DataPersistent.DataAccessObject import Data_Access_Object
 from PythonUniverse.ECommerce.DataPersistent.DataBaseInterface import DataBaseInterface
 from PythonUniverse.ECommerce.Exceptions.ProductMissingException import ProductMissingException
 from PythonUniverse.ECommerce.Exceptions.UnauthorizedAccess import UnauthorizedException
@@ -28,13 +29,16 @@ class Feature:
             'A:/Python/PycharmProjects/PythonUniverse/ECommerce/Data/AppData/')
 
     @classmethod
-    def __add_product(cls, category, item):
+    def __add_product(cls, category, item, product, actual_data):
         category = category.lower()
         if  cls.isValidCategory(category):
             raise ProductMissingException('\t\tUndefined Category...')
         if cls.__isObjectAvailable(category, item):
             return
         cls.dictionary[category].append(item)
+        index : int = Data_Access_Object.product_insert_data(product)
+        actual_data.insert(0, index)
+        Data_Access_Object.insert_data( tuple(actual_data), category)
 
     @classmethod
     def __isObjectAvailable(cls, category, item) -> bool:
@@ -70,9 +74,9 @@ class Feature:
          if isEmpty:
              print('No Products Available Right Now...')
     @classmethod
-    def admin_addProducts(cls, password, category, item):
-        if password == 'KavinDharani@3':
-            cls.__add_product(category, item)
+    def admin_addProducts(cls, password, category, item, product : tuple, actual_data : list):
+        if password == DataBaseInterface.get_admin()[1]:
+            cls.__add_product(category, item, product, actual_data)
             print('\n\t\t KaVin Product has been added to our Application.... !^!')
         else:
             raise UnauthorizedException('\n\t\t Access Denied...')
@@ -93,6 +97,7 @@ class Feature:
 
             if item.name.lower() == name:
                 item.quantity = item.quantity + quantity
+                Data_Access_Object.update_quantity(name, quantity)
                 isSuccess = True
         if not isSuccess:
             raise ProductMissingException('\n\t\t Brand You Have Provided Does not Exists!!!')

@@ -1,10 +1,12 @@
+from PythonUniverse.ECommerce.DataPersistent.DataAccessObject import Data_Access_Object
 from PythonUniverse.ECommerce.Exceptions.ProductMissingException import ProductMissingException
 from PythonUniverse.ECommerce.Feature.ViewAvailabilty import Feature
 
 class Cart:
-    def __init__(self, cart : dict):
+    def __init__(self, cart : dict, isFiles : bool):
         self.cart_products : dict = cart
         self.products : dict  = Feature.dictionary
+        self.isFiles : bool = isFiles
 
     def addProducts(self, category, model, quantity):
         category = category.lower()
@@ -29,6 +31,10 @@ class Cart:
             self.cart_products[category][model] = quantity
 
         self.__quantity_change(category, model, -quantity)
+
+        if not self.isFiles:
+            Data_Access_Object.insert_cart_data(category, model, quantity)
+
         print('\n\t\t Product Has been Successfully added to the cart...')
 
     def __isNotAvailableProduct(self, category, model, quantity) -> bool:
@@ -40,7 +46,6 @@ class Cart:
                 return False
             if prod.name.lower() == model and not prod.quantity >= quantity:
                 raise ProductMissingException('\n\t\t Product Quantity is too High compared to availability...')
-
         return True
 
     def view_cart(self):
@@ -64,6 +69,8 @@ class Cart:
 
         for product in products:
             if product.name.lower() == model:
+                if not self.isFiles:
+                    Data_Access_Object.update_quantity(product.name.lower(), quantity)
                 product.quantity += quantity
                 break
 
@@ -87,8 +94,14 @@ class Cart:
         products[model] = count - quantity
         self.__quantity_change(category, model, quantity)
 
-        if count == 0:
+        if not self.isFiles:
+            Data_Access_Object.insert_cart_data(category, model, -quantity)
+
+        if products[model] == 0 :
             del products[model]
+
+        if len(products) == 0:
+            del self.cart_products[category]
         print('\n\t\t Product Has been Successfully Removed from the cart...')
 
     def __print_object(self, model, category):

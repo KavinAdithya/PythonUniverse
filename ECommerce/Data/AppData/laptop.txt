@@ -1,2 +1,2 @@
-Mega-Book 100 90000.0 Techno 16 Intel-i5 1024
+Mega-Book 97 90000.0 Techno 16 Intel-i5 1024
 Assus-Book 100 900.0 Assus 32 Intel-i3 1024

@@ -35,7 +35,7 @@ class ObjectCreator:
             raise ValueError(e)
 
         laptop = Laptop(attribute[0], attribute[1], attribute[2], attribute[3], main_memory, processor, secondary_memory)
-        Feature.admin_addProducts(password, 'laptop', laptop)
+        Feature.admin_addProducts(password, 'laptop', laptop, tuple(attribute), [main_memory, processor, secondary_memory])
 
     @classmethod
     def bluetooth_creator(cls, password):
@@ -47,14 +47,14 @@ class ObjectCreator:
             raise ValueError(e)
 
         bluetooth = Bluetooth(attribute[0], attribute[1], attribute[2], attribute[3], scope, codec_support)
-        Feature.admin_addProducts(password, 'bluetooth', bluetooth)
+        Feature.admin_addProducts(password, 'bluetooth', bluetooth, tuple(attribute), [scope, codec_support])
 
     @classmethod
     def keyboard_creator(cls, password):
         attribute = cls.__product_creator('Key Board')
 
         keyboard = KeyBoard(attribute[0], attribute[1], attribute[2], attribute[3])
-        Feature.admin_addProducts(password, 'Keyboard', keyboard)
+        Feature.admin_addProducts(password, 'Keyboard', keyboard, tuple(attribute), [])
 
     @classmethod
     def mouse_creator(cls, password):
@@ -67,7 +67,7 @@ class ObjectCreator:
             raise ValueError(e)
 
         mouse = Laptop(attribute[0], attribute[1], attribute[2], attribute[3], DOI, polling_rate, isErgonomics)
-        Feature.admin_addProducts(password, 'mouse', mouse)
+        Feature.admin_addProducts(password, 'mouse', mouse, tuple(attribute), [DOI, polling_rate, isErgonomics])
 
     @classmethod
     def speaker_creator(cls, password):
@@ -79,6 +79,6 @@ class ObjectCreator:
             raise ValueError(e)
 
         speaker = Speaker(attribute[0], attribute[1], attribute[2], attribute[3], driver, connectivity)
-        Feature.admin_addProducts(password, 'speaker', speaker)
+        Feature.admin_addProducts(password, 'speaker', speaker, tuple(attribute), [driver, connectivity])
 
 # 93 12 54 47 39 60 38 98 34 6 60 133 -> 674

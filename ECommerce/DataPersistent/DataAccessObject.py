@@ -1,10 +1,14 @@
 import pymysql
 from pymysql.connections import Connection
 from pymysql.cursors import Cursor
+# from PythonUniverse.ECommerce.UserInterface.Runner import Runner
 
 class Data_Access_Object:
     connection : Connection = None
     cursor : Cursor = None
+    # isFiles : bool = Runner.isFiles
+    isFiles : bool = False
+
     @classmethod
     def load_connector(cls):
         connection : Connection = pymysql.connect(
@@ -50,6 +54,7 @@ class Data_Access_Object:
     @classmethod
     def insert_cart_data(cls, category : str, brand : str, count : int):
         isExists : str = 'SELECT EXISTS (SELECT 1 FROM cart WHERE product_name = %s)'
+        cls.cursor.execute("SET SQL_SAFE_UPDATES = 0")
         cls.cursor.execute(isExists, (brand,))
         query: str
 
@@ -57,7 +62,10 @@ class Data_Access_Object:
             query  = 'UPDATE cart SET count = count + %s WHERE product_name = %s'
         else:
             query = 'INSERT INTO cart(cart_id, count, product_name) VALUES(' + str(cls.__find_index(category)) + ', %s, %s)'
+
         cls.cursor.execute(query, (count, brand))
+        cls.cursor.execute("DELETE FROM cart WHERE count = 0")
+        cls.cursor.execute("SET SQL_SAFE_UPDATES = 1")
         cls.connection.commit()
 
     @classmethod
@@ -72,4 +80,19 @@ class Data_Access_Object:
         elif category == 'keyboard':
             index = 2
         return index
+
+    @classmethod
+    def update_quantity(cls,  name : str, quantity : int):
+        query : str = "update product SET quantity = quantity + %s WHERE product_name = %s"
+        cls.cursor.execute("SET SQL_SAFE_UPDATES = 0")
+        cls.cursor.execute(query, (quantity, name))
+        cls.cursor.execute("SET SQL_SAFE_UPDATES = 1")
+        cls.connection.commit()
+
+    @classmethod
+    def check_out(cls):
+        cls.cursor.execute("TRUNCATE TABLE cart")
+        cls.connection.commit()
+
+
 Data_Access_Object.load_connector()

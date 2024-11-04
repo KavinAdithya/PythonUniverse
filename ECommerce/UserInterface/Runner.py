@@ -17,6 +17,13 @@ class Runner:
     __isFiles : bool = False
 
     @classmethod
+    @property
+    def isFiles(cls) -> bool:
+        return cls.__isFiles
+
+
+
+    @classmethod
     def load_admin(cls, isFiles : bool):
         if isFiles:
             cls.__admin = SettingCartData.admin_data()
@@ -29,7 +36,7 @@ class Runner:
         if isFiles:
             cls.__cart = SettingCartData.load_cart()
             return
-        cls.__cart = Cart(DataBaseInterface.get_cart())
+        cls.__cart = Cart(DataBaseInterface.get_cart(), False)
 
     @classmethod
     def __title(cls):
@@ -72,7 +79,7 @@ class Runner:
             cls.__cart.remove_product(data[0], data[1], data[2])
         elif n == 5:
             cls.__cart.view_cart()
-            checkout = Checkout(cls.__cart.products, cls.__cart.cart_products)
+            checkout = Checkout(cls.__cart.products, cls.__cart.cart_products, cls.__cart.isFiles)
             checkout.estimate_cost()
             if 'yes' == input('\t\t Are You want to checkout (Yes / No) ??  :   ').lower():
                 checkout.check_out()
